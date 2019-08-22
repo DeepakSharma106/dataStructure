@@ -1,11 +1,14 @@
 package collection;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 class Employee {
 	private int id;
@@ -94,7 +97,19 @@ class IdComparator implements Comparator<Employee>{
 	}
 	
 }
+
+
 public class EmployeeTest {
+	
+	public static <T> List<T> filterAnything(List<T> inputList, Predicate<T> predicate){
+		List<T> result = new ArrayList<>();
+		for(T t: inputList) {
+			if(predicate.test(t)) {
+				result.add(t);
+			}
+		}
+		return result;
+	}
 
 	public static void main(String[] args) {
 		Employee e1 = new Employee(10, "Z");
@@ -144,6 +159,26 @@ public class EmployeeTest {
         empSet.add(e11);
         System.out.println(empSet);
         
+        
+        //filter the employee list having id greater than 11
+        
+        Predicate<Employee> predicate = (Employee e) -> e.getId() > 11;
+        System.out.println(employeeList);
+        List<Employee> finalList = filterAnything(employeeList, e -> e.getId() > 3);
+        System.out.println(finalList);
+        
+        
+        List<String> stringList = Arrays.asList("spring in action","spring in new", "i am autumn","can not digest");
+        
+        List<String> outputList = filterAnything(stringList, s -> !s.contains("spring"));
+        System.out.println(outputList);
+        
+        List<Integer> intList = Arrays.asList(11,12,13,14,15,16);
+        
+        List<Integer> list2 =  intList.stream().map(i -> i +5).filter(j -> !(j % 2 == 0)).collect(Collectors.toList());
+        System.out.println(list2);
+        List<Integer> evenList = filterAnything(intList, i -> i % 2 == 0);
+        System.out.println(evenList);
         
 	}
 
