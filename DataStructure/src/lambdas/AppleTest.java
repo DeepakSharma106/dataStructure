@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-
+import static java.util.stream.Collectors.*;
 class Apple {
 	private int weight;
 	private String color;
@@ -123,6 +123,11 @@ public class AppleTest {
 	    
 	    appleList.sort(Comparator.comparing(Apple::getWeight).reversed());
 	    System.out.println("reverse order using reversed() method "+appleList);
+	    
+	    List<Integer> intList = Arrays.asList(1,2,3,4,5,6);
+	    List<Integer> outList = intList.stream().map(i -> i*i).collect(toList());
+	    System.out.println(outList);
+	    
 	}
 
 
